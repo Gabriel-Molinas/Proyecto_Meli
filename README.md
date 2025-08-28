@@ -30,6 +30,11 @@ meli-products-api/
 
 ## Patrones de Diseño Implementados
 
+
+![API Demo](docs/images/arq_diagram.png)
+
+---
+
 ### Clean Architecture
 La aplicación está estructurada siguiendo los principios de Clean Architecture:
 
