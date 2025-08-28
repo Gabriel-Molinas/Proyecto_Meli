@@ -8,7 +8,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"meli-products-api/internal/application/handlers/product"
+	"meli-products-api/internal/application/controllers/product"
 	"meli-products-api/internal/application/mediator"
 	productQueries "meli-products-api/internal/application/queries/product"
 	"meli-products-api/internal/delivery/rest/controllers"
