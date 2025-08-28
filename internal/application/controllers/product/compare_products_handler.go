@@ -8,17 +8,17 @@ import (
 	"meli-products-api/internal/application/queries/product"
 )
 
-// CompareProductsHandler handles CompareProductsQuery requests
+// CompareProductsHandler maneja las solicitudes CompareProductsQuery
 type CompareProductsHandler struct {
 	repo domain.ProductRepository
 }
 
-// NewCompareProductsHandler creates a new CompareProductsHandler
+// NewCompareProductsHandler crea un nuevo CompareProductsHandler
 func NewCompareProductsHandler(repo domain.ProductRepository) *CompareProductsHandler {
 	return &CompareProductsHandler{repo: repo}
 }
 
-// Handle processes CompareProductsQuery and returns products for comparison
+// Handle procesa CompareProductsQuery y devuelve productos para comparación
 func (h *CompareProductsHandler) Handle(ctx context.Context, request interface{}) (interface{}, error) {
 	query, ok := request.(*product.CompareProductsQuery)
 	if !ok {
@@ -30,7 +30,7 @@ func (h *CompareProductsHandler) Handle(ctx context.Context, request interface{}
 		return nil, fmt.Errorf("error retrieving products for comparison: %w", err)
 	}
 
-	// Return comparison response with additional metadata
+	// Devolver respuesta de comparación con metadatos adicionales
 	result := struct {
 		Products     []*domain.Product `json:"products"`
 		TotalCount   int               `json:"total_count"`

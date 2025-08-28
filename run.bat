@@ -15,4 +15,5 @@ echo Presiona Ctrl+C para detener el servidor
 echo =====================================
 echo.
 
+swag init -g cmd/api/main.go -o .\docs\ --parseDependency --parseInternal
 go run cmd/api/main.go

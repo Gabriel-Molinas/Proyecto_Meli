@@ -4,45 +4,45 @@ definitions:
     description: Product model for comparison
     properties:
       available:
-        description: Availability status
+        description: Estado de disponibilidad
         example: true
         type: boolean
       brand:
-        description: Brand of the product
+        description: Marca del producto
         example: Samsung
         type: string
       category:
-        description: Category of the product
+        description: Categoría del producto
         example: Smartphones
         type: string
       description:
-        description: Detailed description of the product
+        description: Descripción detallada del producto
         example: Latest Samsung flagship smartphone with advanced camera technology
         type: string
       id:
-        description: Unique identifier for the product
+        description: Identificador único del producto
         example: PHONE001
         type: string
       image_url:
-        description: URL of the product image
+        description: URL de la imagen del producto
         example: https://images.example.com/samsung-s24.jpg
         type: string
       name:
-        description: Name of the product
+        description: Nombre del producto
         example: Samsung Galaxy S24 Ultra
         type: string
       price:
-        description: Price of the product in decimal format
+        description: Precio del producto en formato decimal
         example: 1299.99
         type: number
       rating:
-        description: Rating of the product (1-5 scale)
+        description: Calificación del producto (escala 1-5)
         example: 4.5
         maximum: 5
         minimum: 0
         type: number
       specifications:
-        description: Technical specifications of the product
+        description: Especificaciones técnicas del producto
         items:
           $ref: '#/definitions/domain.Specification'
         type: array
@@ -57,15 +57,15 @@ definitions:
     description: Technical specification model
     properties:
       name:
-        description: Name of the specification
+        description: Nombre de la especificación
         example: Display Size
         type: string
       unit:
-        description: Unit of measurement if applicable
+        description: Unidad de medida si aplica
         example: inches
         type: string
       value:
-        description: Value of the specification
+        description: Valor de la especificación
         example: 6.8 inches
         type: string
     required:
