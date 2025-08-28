@@ -1,0 +1,122 @@
+[
+  {
+    "id": "PHONE001",
+    "name": "Samsung Galaxy S24 Ultra",
+    "image_url": "https://images.samsung.com/galaxy-s24-ultra.jpg",
+    "description": "El smartphone más avanzado de Samsung con cámara de 200MP, pantalla Dynamic AMOLED 2X de 6.8 pulgadas y S Pen integrado",
+    "price": 1299.99,
+    "rating": 4.6,
+    "category": "Smartphones",
+    "brand": "Samsung",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "6.8", "unit": "pulgadas"},
+      {"name": "RAM", "value": "12", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "256", "unit": "GB"},
+      {"name": "Cámara Principal", "value": "200", "unit": "MP"},
+      {"name": "Batería", "value": "5000", "unit": "mAh"},
+      {"name": "Procesador", "value": "Snapdragon 8 Gen 3", "unit": ""},
+      {"name": "Sistema Operativo", "value": "Android 14", "unit": ""}
+    ]
+  },
+  {
+    "id": "PHONE002",
+    "name": "iPhone 15 Pro Max",
+    "image_url": "https://images.apple.com/iphone-15-pro-max.jpg",
+    "description": "iPhone más avanzado con titanio, cámara Pro de 48MP, chip A17 Pro y puerto USB-C",
+    "price": 1399.99,
+    "rating": 4.8,
+    "category": "Smartphones",
+    "brand": "Apple",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "6.7", "unit": "pulgadas"},
+      {"name": "RAM", "value": "8", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "256", "unit": "GB"},
+      {"name": "Cámara Principal", "value": "48", "unit": "MP"},
+      {"name": "Batería", "value": "4422", "unit": "mAh"},
+      {"name": "Procesador", "value": "A17 Pro", "unit": ""},
+      {"name": "Sistema Operativo", "value": "iOS 17", "unit": ""}
+    ]
+  },
+  {
+    "id": "PHONE003",
+    "name": "Google Pixel 8 Pro",
+    "image_url": "https://images.google.com/pixel-8-pro.jpg",
+    "description": "Smartphone Google con IA avanzada, cámara computacional y experiencia Android pura",
+    "price": 999.99,
+    "rating": 4.4,
+    "category": "Smartphones",
+    "brand": "Google",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "6.7", "unit": "pulgadas"},
+      {"name": "RAM", "value": "12", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "128", "unit": "GB"},
+      {"name": "Cámara Principal", "value": "50", "unit": "MP"},
+      {"name": "Batería", "value": "5050", "unit": "mAh"},
+      {"name": "Procesador", "value": "Google Tensor G3", "unit": ""},
+      {"name": "Sistema Operativo", "value": "Android 14", "unit": ""}
+    ]
+  },
+  {
+    "id": "LAPTOP001",
+    "name": "MacBook Pro 16 M3 Pro",
+    "image_url": "https://images.apple.com/macbook-pro-16-m3.jpg",
+    "description": "Laptop profesional con chip M3 Pro, pantalla Liquid Retina XDR de 16.2 pulgadas",
+    "price": 2499.99,
+    "rating": 4.7,
+    "category": "Laptops",
+    "brand": "Apple",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "16.2", "unit": "pulgadas"},
+      {"name": "RAM", "value": "18", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "512", "unit": "GB SSD"},
+      {"name": "Procesador", "value": "M3 Pro 11-core CPU", "unit": ""},
+      {"name": "GPU", "value": "14-core GPU", "unit": ""},
+      {"name": "Batería", "value": "100", "unit": "Wh"},
+      {"name": "Sistema Operativo", "value": "macOS Sonoma", "unit": ""}
+    ]
+  },
+  {
+    "id": "LAPTOP002",
+    "name": "Dell XPS 15 9530",
+    "image_url": "https://images.dell.com/xps-15-9530.jpg",
+    "description": "Laptop premium con Intel Core i7, pantalla OLED 3.5K y diseño ultradelgado",
+    "price": 2299.99,
+    "rating": 4.3,
+    "category": "Laptops",
+    "brand": "Dell",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "15.6", "unit": "pulgadas"},
+      {"name": "RAM", "value": "16", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "1", "unit": "TB SSD"},
+      {"name": "Procesador", "value": "Intel Core i7-13700H", "unit": ""},
+      {"name": "GPU", "value": "NVIDIA RTX 4060", "unit": ""},
+      {"name": "Batería", "value": "86", "unit": "Wh"},
+      {"name": "Sistema Operativo", "value": "Windows 11 Pro", "unit": ""}
+    ]
+  },
+  {
+    "id": "HEADPHONE001",
+    "name": "Sony WH-1000XM5",
+    "image_url": "https://images.sony.com/wh-1000xm5.jpg",
+    "description": "Audífonos inalámbricos premium con cancelación de ruido líder en la industria",
+    "price": 399.99,
+    "rating": 4.5,
+    "category": "Audífonos",
+    "brand": "Sony",
+    "available": true,
+    "specifications": [
+      {"name": "Tipo", "value": "Over-ear", "unit": ""},
+      {"name": "Conectividad", "value": "Bluetooth 5.2", "unit": ""},
+      {"name": "Batería", "value": "30", "unit": "horas"},
+      {"name": "Cancelación de Ruido", "value": "Activa", "unit": ""},
+      {"name": "Drivers", "value": "30", "unit": "mm"},
+      {"name": "Peso", "value": "250", "unit": "g"},
+      {"name": "Carga Rápida", "value": "3 min = 3h", "unit": ""}
+    ]
+  }
+]

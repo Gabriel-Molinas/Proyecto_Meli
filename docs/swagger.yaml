@@ -1,0 +1,347 @@
+basePath: /api/v1
+definitions:
+  domain.Product:
+    description: Product model for comparison
+    properties:
+      available:
+        description: Availability status
+        example: true
+        type: boolean
+      brand:
+        description: Brand of the product
+        example: Samsung
+        type: string
+      category:
+        description: Category of the product
+        example: Smartphones
+        type: string
+      description:
+        description: Detailed description of the product
+        example: Latest Samsung flagship smartphone with advanced camera technology
+        type: string
+      id:
+        description: Unique identifier for the product
+        example: PHONE001
+        type: string
+      image_url:
+        description: URL of the product image
+        example: https://images.example.com/samsung-s24.jpg
+        type: string
+      name:
+        description: Name of the product
+        example: Samsung Galaxy S24 Ultra
+        type: string
+      price:
+        description: Price of the product in decimal format
+        example: 1299.99
+        type: number
+      rating:
+        description: Rating of the product (1-5 scale)
+        example: 4.5
+        maximum: 5
+        minimum: 0
+        type: number
+      specifications:
+        description: Technical specifications of the product
+        items:
+          $ref: '#/definitions/domain.Specification'
+        type: array
+    required:
+    - description
+    - image_url
+    - name
+    - price
+    - rating
+    type: object
+  domain.Specification:
+    description: Technical specification model
+    properties:
+      name:
+        description: Name of the specification
+        example: Display Size
+        type: string
+      unit:
+        description: Unit of measurement if applicable
+        example: inches
+        type: string
+      value:
+        description: Value of the specification
+        example: 6.8 inches
+        type: string
+    required:
+    - name
+    - value
+    type: object
+  meli-products-api_pkg_response.APIResponse:
+    properties:
+      data: {}
+      error:
+        $ref: '#/definitions/meli-products-api_pkg_response.ErrorInfo'
+      message:
+        example: Request completed successfully
+        type: string
+      meta:
+        $ref: '#/definitions/meli-products-api_pkg_response.Meta'
+      success:
+        example: true
+        type: boolean
+    type: object
+  meli-products-api_pkg_response.ErrorInfo:
+    properties:
+      code:
+        example: PRODUCT_NOT_FOUND
+        type: string
+      details:
+        example: Please check the product ID and try again
+        type: string
+      message:
+        example: Product with ID 'INVALID_ID' not found
+        type: string
+    type: object
+  meli-products-api_pkg_response.Meta:
+    properties:
+      page:
+        example: 1
+        type: integer
+      page_size:
+        example: 20
+        type: integer
+      request_id:
+        example: req-12345-abcde
+        type: string
+      timestamp:
+        example: "2024-01-15T10:30:00Z"
+        type: string
+      total_count:
+        example: 150
+        type: integer
+      total_pages:
+        example: 8
+        type: integer
+      version:
+        example: v1
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+    url: http://www.example.com/support
+  description: API for product comparison with detailed product information
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Products Comparison API
+  version: "1.0"
+paths:
+  /brands:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all available product brands
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Brands retrieved successfully
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+      summary: Get all available brands
+      tags:
+      - metadata
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all available product categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Categories retrieved successfully
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+      summary: Get all available categories
+      tags:
+      - metadata
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Check if the API is running and healthy
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API is healthy
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+      summary: Health check endpoint
+      tags:
+      - system
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all products with optional filtering by category and price
+        range
+      parameters:
+      - description: Filter by category
+        example: '"Smartphones"'
+        in: query
+        name: category
+        type: string
+      - description: Minimum price filter
+        example: 100
+        in: query
+        name: min_price
+        type: number
+      - description: Maximum price filter
+        example: 2000
+        in: query
+        name: max_price
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Products retrieved successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/domain.Product'
+                  type: array
+              type: object
+        "400":
+          description: Invalid query parameters
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+      summary: Get all products
+      tags:
+      - products
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific product by its unique
+        identifier
+      parameters:
+      - description: Product ID
+        example: '"PHONE001"'
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product retrieved successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/domain.Product'
+              type: object
+        "400":
+          description: Invalid product ID
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "404":
+          description: Product not found
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+      summary: Get a product by ID
+      tags:
+      - products
+  /products/compare:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve and compare multiple products by their IDs for feature
+        comparison
+      parameters:
+      - description: Comma-separated product IDs
+        example: '"PHONE001,PHONE002,PHONE003"'
+        in: query
+        name: ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Products comparison retrieved successfully
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "400":
+          description: Invalid product IDs or insufficient products for comparison
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "404":
+          description: One or more products not found
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+      summary: Compare multiple products
+      tags:
+      - products
+  /products/search:
+    get:
+      consumes:
+      - application/json
+      description: Search for products by name, description, brand, or category
+      parameters:
+      - description: Search query
+        example: '"Samsung Galaxy"'
+        in: query
+        name: q
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Products search completed successfully
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "400":
+          description: Invalid or missing search query
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/meli-products-api_pkg_response.APIResponse'
+      summary: Search products
+      tags:
+      - products
+swagger: "2.0"
