@@ -8,17 +8,17 @@ import (
 	"meli-products-api/internal/application/queries/product"
 )
 
-// GetProductHandler handles GetProductQuery requests
+// GetProductHandler maneja las solicitudes GetProductQuery
 type GetProductHandler struct {
 	repo domain.ProductRepository
 }
 
-// NewGetProductHandler creates a new GetProductHandler
+// NewGetProductHandler crea un nuevo GetProductHandler
 func NewGetProductHandler(repo domain.ProductRepository) *GetProductHandler {
 	return &GetProductHandler{repo: repo}
 }
 
-// Handle processes GetProductQuery and returns a single product
+// Handle procesa GetProductQuery y devuelve un producto individual
 func (h *GetProductHandler) Handle(ctx context.Context, request interface{}) (interface{}, error) {
 	query, ok := request.(*product.GetProductQuery)
 	if !ok {

@@ -13,12 +13,12 @@ import (
 	"meli-products-api/pkg/response"
 )
 
-// ProductController handles HTTP requests for product operations
+// ProductController maneja las solicitudes HTTP para operaciones de productos
 type ProductController struct {
 	mediator mediator.Mediator
 }
 
-// NewProductController creates a new ProductController
+// NewProductController crea un nuevo ProductController
 func NewProductController(mediator mediator.Mediator) *ProductController {
 	return &ProductController{
 		mediator: mediator,

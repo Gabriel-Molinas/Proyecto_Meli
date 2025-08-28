@@ -345,54 +345,54 @@
             ],
             "properties": {
                 "available": {
-                    "description": "Availability status",
+                    "description": "Estado de disponibilidad",
                     "type": "boolean",
                     "example": true
                 },
                 "brand": {
-                    "description": "Brand of the product",
+                    "description": "Marca del producto",
                     "type": "string",
                     "example": "Samsung"
                 },
                 "category": {
-                    "description": "Category of the product",
+                    "description": "Categoría del producto",
                     "type": "string",
                     "example": "Smartphones"
                 },
                 "description": {
-                    "description": "Detailed description of the product",
+                    "description": "Descripción detallada del producto",
                     "type": "string",
                     "example": "Latest Samsung flagship smartphone with advanced camera technology"
                 },
                 "id": {
-                    "description": "Unique identifier for the product",
+                    "description": "Identificador único del producto",
                     "type": "string",
                     "example": "PHONE001"
                 },
                 "image_url": {
-                    "description": "URL of the product image",
+                    "description": "URL de la imagen del producto",
                     "type": "string",
                     "example": "https://images.example.com/samsung-s24.jpg"
                 },
                 "name": {
-                    "description": "Name of the product",
+                    "description": "Nombre del producto",
                     "type": "string",
                     "example": "Samsung Galaxy S24 Ultra"
                 },
                 "price": {
-                    "description": "Price of the product in decimal format",
+                    "description": "Precio del producto en formato decimal",
                     "type": "number",
                     "example": 1299.99
                 },
                 "rating": {
-                    "description": "Rating of the product (1-5 scale)",
+                    "description": "Calificación del producto (escala 1-5)",
                     "type": "number",
                     "maximum": 5,
                     "minimum": 0,
                     "example": 4.5
                 },
                 "specifications": {
-                    "description": "Technical specifications of the product",
+                    "description": "Especificaciones técnicas del producto",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/domain.Specification"
@@ -409,17 +409,17 @@
             ],
             "properties": {
                 "name": {
-                    "description": "Name of the specification",
+                    "description": "Nombre de la especificación",
                     "type": "string",
                     "example": "Display Size"
                 },
                 "unit": {
-                    "description": "Unit of measurement if applicable",
+                    "description": "Unidad de medida si aplica",
                     "type": "string",
                     "example": "inches"
                 },
                 "value": {
-                    "description": "Value of the specification",
+                    "description": "Valor de la especificación",
                     "type": "string",
                     "example": "6.8 inches"
                 }

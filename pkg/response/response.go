@@ -7,7 +7,7 @@ import (
 	"meli-products-api/domain"
 )
 
-// APIResponse represents a standard API response structure
+// APIResponse representa la estructura estándar de respuesta de la API
 type APIResponse struct {
 	Success bool        `json:"success" example:"true"`
 	Message string      `json:"message" example:"Request completed successfully"`
@@ -16,14 +16,14 @@ type APIResponse struct {
 	Meta    *Meta       `json:"meta,omitempty"`
 }
 
-// ErrorInfo represents error information in the response
+// ErrorInfo representa la información de error en la respuesta
 type ErrorInfo struct {
 	Code    string `json:"code" example:"PRODUCT_NOT_FOUND"`
 	Message string `json:"message" example:"Product with ID 'INVALID_ID' not found"`
 	Details string `json:"details,omitempty" example:"Please check the product ID and try again"`
 }
 
-// Meta represents metadata information in the response
+// Meta representa la información de metadatos en la respuesta
 type Meta struct {
 	Timestamp  string `json:"timestamp" example:"2024-01-15T10:30:00Z"`
 	RequestID  string `json:"request_id,omitempty" example:"req-12345-abcde"`
@@ -34,14 +34,14 @@ type Meta struct {
 	TotalPages int    `json:"total_pages,omitempty" example:"8"`
 }
 
-// JSON sends a JSON response with the given status code
+// JSON envía una respuesta JSON con el código de estado dado
 func JSON(w http.ResponseWriter, statusCode int, response *APIResponse) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 	json.NewEncoder(w).Encode(response)
 }
 
-// Success sends a successful JSON response
+// Success envía una respuesta JSON exitosa
 func Success(w http.ResponseWriter, data interface{}, message string) {
 	JSON(w, http.StatusOK, &APIResponse{
 		Success: true,
@@ -50,7 +50,7 @@ func Success(w http.ResponseWriter, data interface{}, message string) {
 	})
 }
 
-// SuccessWithMeta sends a successful JSON response with metadata
+// SuccessWithMeta envía una respuesta JSON exitosa con metadatos
 func SuccessWithMeta(w http.ResponseWriter, data interface{}, message string, meta *Meta) {
 	JSON(w, http.StatusOK, &APIResponse{
 		Success: true,
@@ -60,7 +60,7 @@ func SuccessWithMeta(w http.ResponseWriter, data interface{}, message string, me
 	})
 }
 
-// Created sends a 201 Created response
+// Created envía una respuesta 201 Created
 func Created(w http.ResponseWriter, data interface{}, message string) {
 	JSON(w, http.StatusCreated, &APIResponse{
 		Success: true,
@@ -69,7 +69,7 @@ func Created(w http.ResponseWriter, data interface{}, message string) {
 	})
 }
 
-// BadRequest sends a 400 Bad Request response
+// BadRequest envía una respuesta 400 Bad Request
 func BadRequest(w http.ResponseWriter, code, message, details string) {
 	JSON(w, http.StatusBadRequest, &APIResponse{
 		Success: false,
@@ -82,7 +82,7 @@ func BadRequest(w http.ResponseWriter, code, message, details string) {
 	})
 }
 
-// NotFound sends a 404 Not Found response
+// NotFound envía una respuesta 404 Not Found
 func NotFound(w http.ResponseWriter, code, message, details string) {
 	JSON(w, http.StatusNotFound, &APIResponse{
 		Success: false,
@@ -95,7 +95,7 @@ func NotFound(w http.ResponseWriter, code, message, details string) {
 	})
 }
 
-// InternalServerError sends a 500 Internal Server Error response
+// InternalServerError envía una respuesta 500 Internal Server Error
 func InternalServerError(w http.ResponseWriter, code, message, details string) {
 	JSON(w, http.StatusInternalServerError, &APIResponse{
 		Success: false,
@@ -108,7 +108,7 @@ func InternalServerError(w http.ResponseWriter, code, message, details string) {
 	})
 }
 
-// Unauthorized sends a 401 Unauthorized response
+// Unauthorized envía una respuesta 401 Unauthorized
 func Unauthorized(w http.ResponseWriter, code, message, details string) {
 	JSON(w, http.StatusUnauthorized, &APIResponse{
 		Success: false,
@@ -121,7 +121,7 @@ func Unauthorized(w http.ResponseWriter, code, message, details string) {
 	})
 }
 
-// Forbidden sends a 403 Forbidden response
+// Forbidden envía una respuesta 403 Forbidden
 func Forbidden(w http.ResponseWriter, code, message, details string) {
 	JSON(w, http.StatusForbidden, &APIResponse{
 		Success: false,
@@ -134,7 +134,7 @@ func Forbidden(w http.ResponseWriter, code, message, details string) {
 	})
 }
 
-// ValidationError sends a 422 Unprocessable Entity response for validation errors
+// ValidationError envía una respuesta 422 Unprocessable Entity para errores de validación
 func ValidationError(w http.ResponseWriter, code, message, details string) {
 	JSON(w, http.StatusUnprocessableEntity, &APIResponse{
 		Success: false,
@@ -147,7 +147,7 @@ func ValidationError(w http.ResponseWriter, code, message, details string) {
 	})
 }
 
-// HandleError analyzes an error and sends the appropriate HTTP response
+// HandleError analiza un error y envía la respuesta HTTP apropiada
 func HandleError(w http.ResponseWriter, err error) {
 	switch e := err.(type) {
 	case *domain.ProductNotFoundError:

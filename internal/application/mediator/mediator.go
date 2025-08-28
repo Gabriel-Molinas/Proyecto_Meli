@@ -1,3 +1,17 @@
+/*
+Package mediator implementa el ptrón Mediator para desacoplar controladores REST
+de la lógica de negocio en la aplicación.
+
+El patrón Mediator permite que los controladores HTTP envíen queries/comandos sin
+conocer directamente los handlers que los procesan, facilitando la mantenibilidad
+y testabilidad del código.
+
+Características principales:
+- Registro dinámico de handlers por tipo de request
+- Resolución automática de handlers basada en reflection
+- Interfaz simple para envío de solicitudes
+- Soporte para funciones como handlers (HandlerFunc)
+*/
 package mediator
 
 import (
@@ -6,26 +20,26 @@ import (
 	"reflect"
 )
 
-// Mediator defines the interface for the mediator pattern
+// Mediator define la interfaz para el patrón mediator
 type Mediator interface {
-	// Send sends a request to the appropriate handler
+	// Send envía una solicitud al handler apropiado
 	Send(ctx context.Context, request interface{}) (interface{}, error)
 
-	// Register registers a handler for a specific request type
+	// Register registra un handler para un tipo de request específico
 	Register(requestType interface{}, handler Handler)
 }
 
-// Handler defines the interface for request handlers
+// Handler define la interfaz para los handlers de requests
 type Handler interface {
 	Handle(ctx context.Context, request interface{}) (interface{}, error)
 }
 
-// mediator is the concrete implementation of the Mediator interface
+// mediator es la implementación concreta de la interfaz Mediator
 type mediator struct {
 	handlers map[string]Handler
 }
 
-// NewMediator creates a new mediator instance
+// NewMediator crea una nueva instancia de mediator
 func NewMediator() Mediator {
 	return &mediator{
 		handlers: make(map[string]Handler),
@@ -50,10 +64,10 @@ func (m *mediator) Register(requestType interface{}, handler Handler) {
 	m.handlers[typeName] = handler
 }
 
-// HandlerFunc is a function type that implements the Handler interface
+// HandlerFunc es un tipo de función que implementa la interfaz Handler
 type HandlerFunc func(ctx context.Context, request interface{}) (interface{}, error)
 
-// Handle implements the Handler interface for HandlerFunc
+// Handle implementa la interfaz Handler para HandlerFunc
 func (hf HandlerFunc) Handle(ctx context.Context, request interface{}) (interface{}, error) {
 	return hf(ctx, request)
 }

@@ -8,17 +8,17 @@ import (
 	"meli-products-api/internal/application/queries/product"
 )
 
-// SearchProductsHandler handles SearchProductsQuery requests
+// SearchProductsHandler maneja las solicitudes SearchProductsQuery
 type SearchProductsHandler struct {
 	repo domain.ProductRepository
 }
 
-// NewSearchProductsHandler creates a new SearchProductsHandler
+// NewSearchProductsHandler crea un nuevo SearchProductsHandler
 func NewSearchProductsHandler(repo domain.ProductRepository) *SearchProductsHandler {
 	return &SearchProductsHandler{repo: repo}
 }
 
-// Handle processes SearchProductsQuery and returns matching products
+// Handle procesa SearchProductsQuery y devuelve productos coincidentes
 func (h *SearchProductsHandler) Handle(ctx context.Context, request interface{}) (interface{}, error) {
 	query, ok := request.(*product.SearchProductsQuery)
 	if !ok {

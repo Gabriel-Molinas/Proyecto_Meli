@@ -7,21 +7,21 @@ import (
 	"meli-products-api/internal/application/queries/product"
 )
 
-// GetCategoriesHandler handles GetCategoriesQuery requests
+// GetCategoriesHandler maneja las solicitudes GetCategoriesQuery
 type GetCategoriesHandler struct {
 	repo interface {
 		GetCategories() []string
 	}
 }
 
-// NewGetCategoriesHandler creates a new GetCategoriesHandler
+// NewGetCategoriesHandler crea un nuevo GetCategoriesHandler
 func NewGetCategoriesHandler(repo interface {
 	GetCategories() []string
 }) *GetCategoriesHandler {
 	return &GetCategoriesHandler{repo: repo}
 }
 
-// Handle processes GetCategoriesQuery and returns available categories
+// Handle procesa GetCategoriesQuery y devuelve las categorías disponibles
 func (h *GetCategoriesHandler) Handle(ctx context.Context, request interface{}) (interface{}, error) {
 	_, ok := request.(*product.GetCategoriesQuery)
 	if !ok {

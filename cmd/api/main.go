@@ -1,3 +1,19 @@
+/*
+Aplicación principal de la API de Comparación de Productos.
+
+Esta aplicación implementa una API REST para comparación de productos utilizando 
+los patrones Clean Architecture, Mediator y CQRS. Proporciona endpoints para 
+consultar, buscar y comparar productos de manera eficiente.
+
+Arquitectura:
+- Clean Architecture con capas bien definidas
+- Patrón Mediator para desacoplar controladores de handlers
+- CQRS para separar operaciones de lectura
+- Repository pattern para abstracción de datos
+- Middleware completo para logging, CORS, seguridad
+
+La aplicación utiliza Gin como framework web y Swagger para documentación automática.
+*/
 package main
 
 import (
@@ -37,26 +53,26 @@ import (
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	// Initialize repository with JSON data
+	// Inicializar repositorio con datos JSON
 	dataPath := filepath.Join("data", "products.json")
 	repo, err := jsonRepo.NewProductRepository(dataPath)
 	if err != nil {
 		log.Fatalf("Failed to initialize repository: %v", err)
 	}
 
-	// Initialize mediator
+	// Inicializar mediator
 	mediatorInstance := mediator.NewMediator()
 
-	// Register handlers with mediator
+	// Registrar handlers con el mediator
 	registerHandlers(mediatorInstance, repo)
 
-	// Initialize controller
+	// Inicializar controlador
 	productController := controllers.NewProductController(mediatorInstance)
 
-	// Setup Gin router
+	// Configurar router de Gin
 	router := setupRouter(productController)
 
-	// Start server
+	// Iniciar servidor
 	log.Println("Starting Products Comparison API on port 8080...")
 	log.Println("Swagger documentation available at: http://localhost:8080/swagger/index.html")
 
@@ -65,43 +81,43 @@ func main() {
 	}
 }
 
-// registerHandlers registers all query handlers with the mediator
+// registerHandlers registra todos los handlers de queries con el mediator
 func registerHandlers(m mediator.Mediator, repo *jsonRepo.ProductRepository) {
-	// Register product handlers
+	// Registrar handlers de productos
 	m.Register(&productQueries.GetProductQuery{}, product.NewGetProductHandler(repo))
 	m.Register(&productQueries.GetAllProductsQuery{}, product.NewGetAllProductsHandler(repo))
 	m.Register(&productQueries.CompareProductsQuery{}, product.NewCompareProductsHandler(repo))
 	m.Register(&productQueries.SearchProductsQuery{}, product.NewSearchProductsHandler(repo))
 
-	// Register metadata handlers
+	// Registrar handlers de metadatos
 	m.Register(&productQueries.GetCategoriesQuery{}, product.NewGetCategoriesHandler(repo))
 	m.Register(&productQueries.GetBrandsQuery{}, product.NewGetBrandsHandler(repo))
 }
 
-// setupRouter configures and returns the Gin router with all routes and middleware
+// setupRouter configura y devuelve el router de Gin con todas las rutas y middleware
 func setupRouter(productController *controllers.ProductController) *gin.Engine {
-	// Set Gin to release mode for production (comment out for development)
+	// Establecer Gin en modo release para producción (comentar para desarrollo)
 	// gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
 
-	// Add middleware
+	// Agregar middleware
 	router.Use(middleware.LoggerMiddleware())
 	router.Use(middleware.RecoveryMiddleware())
 	router.Use(middleware.CORSMiddleware())
 	router.Use(middleware.RequestIDMiddleware())
 	router.Use(middleware.SecurityHeadersMiddleware())
 
-	// Swagger documentation route
+	// Ruta de documentación Swagger
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	// API routes group
+	// Grupo de rutas de API
 	v1 := router.Group("/api/v1")
 	{
-		// System routes
+		// Rutas del sistema
 		v1.GET("/health", productController.HealthCheck)
 
-		// Product routes
+		// Rutas de productos
 		products := v1.Group("/products")
 		{
 			products.GET("", productController.GetAllProducts)
@@ -110,12 +126,12 @@ func setupRouter(productController *controllers.ProductController) *gin.Engine {
 			products.GET("/:id", productController.GetProduct)
 		}
 
-		// Metadata routes
+		// Rutas de metadatos
 		v1.GET("/categories", productController.GetCategories)
 		v1.GET("/brands", productController.GetBrands)
 	}
 
-	// Root redirect to swagger
+	// Redirección de raíz a swagger
 	router.GET("/", func(c *gin.Context) {
 		c.Redirect(302, "/swagger/index.html")
 	})

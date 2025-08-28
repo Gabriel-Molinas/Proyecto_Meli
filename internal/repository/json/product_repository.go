@@ -1,3 +1,18 @@
+/*
+Package json implementa el repositorio de productos utilizando archivos JSON como 
+fuente de datos.
+
+Este repositorio proporciona una implementación completa de domain.ProductRepository 
+que carga y mantiene los productos en memoria para un acceso rápido. Es ideal para 
+desarrollo, demos y aplicaciones que no requieren persistencia compleja.
+
+Características:
+- Carga de datos desde archivos JSON al inicializar
+- Operaciones de búsqueda y filtrado en memoria
+- Manejo de errores específicos del dominio
+- Soporte para búsqueda por texto en múltiples campos
+- Extracción de metadatos (categorías y marcas únicas)
+*/
 package json
 
 import (
@@ -10,19 +25,19 @@ import (
 	"meli-products-api/domain"
 )
 
-// ProductRepository implements domain.ProductRepository using JSON file
+// ProductRepository implementa domain.ProductRepository utilizando archivos JSON
 type ProductRepository struct {
 	filePath string
 	products []*domain.Product
 }
 
-// NewProductRepository creates a new JSON-based product repository
+// NewProductRepository crea un nuevo repositorio de productos basado en JSON
 func NewProductRepository(filePath string) (*ProductRepository, error) {
 	repo := &ProductRepository{
 		filePath: filePath,
 	}
 
-	// Load products from JSON file on initialization
+	// Cargar productos desde archivo JSON durante la inicialización
 	if err := repo.loadProducts(); err != nil {
 		return nil, fmt.Errorf("failed to load products: %w", err)
 	}
@@ -30,7 +45,7 @@ func NewProductRepository(filePath string) (*ProductRepository, error) {
 	return repo, nil
 }
 
-// loadProducts loads products from JSON file into memory
+// loadProducts carga los productos desde el archivo JSON a memoria
 func (r *ProductRepository) loadProducts() error {
 	file, err := os.Open(r.filePath)
 	if err != nil {
@@ -50,7 +65,7 @@ func (r *ProductRepository) loadProducts() error {
 	return nil
 }
 
-// GetByID retrieves a product by its ID
+// GetByID obtiene un producto por su ID
 func (r *ProductRepository) GetByID(id string) (*domain.Product, error) {
 	if id == "" {
 		return nil, &domain.InvalidProductIDError{ID: id}
@@ -65,17 +80,17 @@ func (r *ProductRepository) GetByID(id string) (*domain.Product, error) {
 	return nil, &domain.ProductNotFoundError{ID: id}
 }
 
-// GetAll retrieves all products with optional filtering
+// GetAll obtiene todos los productos con filtrado opcional
 func (r *ProductRepository) GetAll(category string, minPrice, maxPrice float64) ([]*domain.Product, error) {
 	var filteredProducts []*domain.Product
 
 	for _, product := range r.products {
-		// Filter by category if specified
+		// Filtrar por categoría si está especificada
 		if category != "" && !strings.EqualFold(product.Category, category) {
 			continue
 		}
 
-		// Filter by price range if specified
+		// Filtrar por rango de precio si está especificado
 		if minPrice > 0 && product.Price < minPrice {
 			continue
 		}
@@ -89,7 +104,7 @@ func (r *ProductRepository) GetAll(category string, minPrice, maxPrice float64) 
 	return filteredProducts, nil
 }
 
-// GetByIDs retrieves multiple products by their IDs for comparison
+// GetByIDs obtiene múltiples productos por sus IDs para comparación
 func (r *ProductRepository) GetByIDs(ids []string) ([]*domain.Product, error) {
 	if len(ids) == 0 {
 		return []*domain.Product{}, nil
@@ -110,7 +125,7 @@ func (r *ProductRepository) GetByIDs(ids []string) ([]*domain.Product, error) {
 		products = append(products, product)
 	}
 
-	// If some products were not found, return an error with details
+	// Si algunos productos no fueron encontrados, devolver error con detalles
 	if len(notFoundIDs) > 0 {
 		return products, fmt.Errorf("products not found: %v", notFoundIDs)
 	}
@@ -118,7 +133,7 @@ func (r *ProductRepository) GetByIDs(ids []string) ([]*domain.Product, error) {
 	return products, nil
 }
 
-// Search products by name or description
+// Search busca productos por nombre o descripción
 func (r *ProductRepository) Search(query string) ([]*domain.Product, error) {
 	if query == "" {
 		return r.GetAll("", 0, 0)
@@ -128,7 +143,7 @@ func (r *ProductRepository) Search(query string) ([]*domain.Product, error) {
 	queryLower := strings.ToLower(query)
 
 	for _, product := range r.products {
-		// Search in name, description, brand, and category
+		// Buscar en nombre, descripción, marca y categoría
 		if strings.Contains(strings.ToLower(product.Name), queryLower) ||
 			strings.Contains(strings.ToLower(product.Description), queryLower) ||
 			strings.Contains(strings.ToLower(product.Brand), queryLower) ||
@@ -140,12 +155,12 @@ func (r *ProductRepository) Search(query string) ([]*domain.Product, error) {
 	return matchingProducts, nil
 }
 
-// GetProductCount returns the total number of products
+// GetProductCount devuelve el número total de productos
 func (r *ProductRepository) GetProductCount() int {
 	return len(r.products)
 }
 
-// GetCategories returns all unique categories
+// GetCategories devuelve todas las categorías únicas
 func (r *ProductRepository) GetCategories() []string {
 	categoryMap := make(map[string]bool)
 	var categories []string
@@ -160,7 +175,7 @@ func (r *ProductRepository) GetCategories() []string {
 	return categories
 }
 
-// GetBrands returns all unique brands
+// GetBrands devuelve todas las marcas únicas
 func (r *ProductRepository) GetBrands() []string {
 	brandMap := make(map[string]bool)
 	var brands []string
