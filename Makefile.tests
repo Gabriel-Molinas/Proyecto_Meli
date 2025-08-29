@@ -1,0 +1,151 @@
+# Makefile para Tests Centralizados - API Comparación de Productos
+
+.PHONY: test-all test-unit test-integration test-e2e test-coverage test-clean test-setup
+
+# Variables
+TESTS_DIR=./tests
+COVERAGE_DIR=coverage
+COVERAGE_FILE=$(COVERAGE_DIR)/coverage.out
+COVERAGE_HTML=$(COVERAGE_DIR)/coverage.html
+
+# Crear directorio de cobertura
+$(COVERAGE_DIR):
+	mkdir -p $(COVERAGE_DIR)
+
+# Setup inicial de tests (crear fixtures si no existen)
+test-setup:
+	@echo "🔧 Configurando entorno de testing..."
+	@if [ ! -f "$(TESTS_DIR)/fixtures/test_products.json" ]; then \
+		echo "⚠️  Archivo de fixtures no encontrado, usando datos de ejemplo"; \
+	fi
+
+# Ejecutar todos los tests centralizados
+test-all: test-setup
+	@echo "🧪 Ejecutando todos los tests centralizados..."
+	go test $(TESTS_DIR)/... -v
+
+# Tests unitarios solamente
+test-unit: test-setup
+	@echo "⚡ Ejecutando tests unitarios..."
+	go test $(TESTS_DIR)/unit/... -v
+
+# Tests de integración solamente  
+test-integration: test-setup
+	@echo "🔗 Ejecutando tests de integración..."
+	go test $(TESTS_DIR)/integration/... -v
+
+# Tests end-to-end (cuando existan)
+test-e2e: test-setup
+	@echo "🎯 Ejecutando tests end-to-end..."
+	@if [ -d "$(TESTS_DIR)/e2e" ]; then \
+		go test $(TESTS_DIR)/e2e/... -v; \
+	else \
+		echo "📋 No hay tests E2E configurados aún"; \
+	fi
+
+# Tests con cobertura completa
+test-coverage: $(COVERAGE_DIR) test-setup
+	@echo "📊 Ejecutando tests con análisis de cobertura..."
+	go test $(TESTS_DIR)/... -coverprofile=$(COVERAGE_FILE) -covermode=atomic
+	go tool cover -html=$(COVERAGE_FILE) -o $(COVERAGE_HTML)
+	go tool cover -func=$(COVERAGE_FILE)
+	@echo "📋 Reporte HTML: $(COVERAGE_HTML)"
+
+# Tests con race detection
+test-race: test-setup
+	@echo "🏃 Ejecutando tests con detección de race conditions..."
+	go test $(TESTS_DIR)/... -race -v
+
+# Tests con benchmarks
+test-bench: test-setup
+	@echo "🚀 Ejecutando benchmarks..."
+	go test $(TESTS_DIR)/... -bench=. -benchmem
+
+# Tests específicos con pattern
+test-pattern: test-setup
+	@echo "🔍 Ejecutando tests que coinciden con: $(PATTERN)"
+	@if [ -z "$(PATTERN)" ]; then \
+		echo "❌ Uso: make test-pattern PATTERN=TestName"; \
+		exit 1; \
+	fi
+	go test $(TESTS_DIR)/... -run $(PATTERN) -v
+
+# Tests con timeout personalizado
+test-timeout: test-setup
+	@echo "⏱️  Ejecutando tests con timeout de $(TIMEOUT)..."
+	@TIMEOUT=$${TIMEOUT:-30s}; \
+	go test $(TESTS_DIR)/... -timeout=$$TIMEOUT -v
+
+# Limpiar archivos de test
+test-clean:
+	@echo "🧹 Limpiando archivos de test..."
+	rm -rf $(COVERAGE_DIR)
+	go clean -testcache
+	@echo "✅ Cache de tests limpiado"
+
+# Validar estructura de tests
+test-validate:
+	@echo "✅ Validando estructura de tests..."
+	@echo "📁 Directorios encontrados:"
+	@find $(TESTS_DIR) -type d | sort
+	@echo ""
+	@echo "📄 Archivos de test encontrados:"
+	@find $(TESTS_DIR) -name "*_test.go" | sort
+	@echo ""
+	@echo "📋 Archivos de fixtures:"
+	@find $(TESTS_DIR)/fixtures -type f 2>/dev/null | sort || echo "   No fixtures found"
+
+# Comparar tests originales vs nuevos
+test-compare:
+	@echo "🔍 Comparando tests originales vs centralizados..."
+	@echo "Tests originales (junto al código):"
+	@find . -name "*_test.go" -not -path "./tests/*" | wc -l | xargs echo "  "
+	@echo "Tests centralizados:"
+	@find $(TESTS_DIR) -name "*_test.go" | wc -l | xargs echo "  "
+	@echo ""
+	@echo "📋 Archivos originales:"
+	@find . -name "*_test.go" -not -path "./tests/*" | sort
+
+# Stats de tests
+test-stats:
+	@echo "📊 Estadísticas de tests..."
+	@echo "Total archivos de test: $$(find $(TESTS_DIR) -name "*_test.go" | wc -l)"
+	@echo "Tests unitarios: $$(find $(TESTS_DIR)/unit -name "*_test.go" 2>/dev/null | wc -l)"
+	@echo "Tests de integración: $$(find $(TESTS_DIR)/integration -name "*_test.go" 2>/dev/null | wc -l)"  
+	@echo "Tests E2E: $$(find $(TESTS_DIR)/e2e -name "*_test.go" 2>/dev/null | wc -l)"
+	@echo "Fixtures: $$(find $(TESTS_DIR)/fixtures -type f 2>/dev/null | wc -l)"
+
+# Ejecutar tests con output JSON para CI/CD
+test-json: test-setup
+	@echo "📋 Ejecutando tests con output JSON..."
+	go test $(TESTS_DIR)/... -json
+
+# Ayuda de comandos
+test-help:
+	@echo "📖 Comandos de testing centralizados disponibles:"
+	@echo ""
+	@echo "🧪 Ejecución de Tests:"
+	@echo "  make test-all         - Todos los tests centralizados"
+	@echo "  make test-unit        - Solo tests unitarios"  
+	@echo "  make test-integration - Solo tests de integración"
+	@echo "  make test-e2e         - Solo tests end-to-end"
+	@echo ""
+	@echo "📊 Análisis:"
+	@echo "  make test-coverage    - Tests con cobertura de código"
+	@echo "  make test-race        - Tests con detección de race conditions"
+	@echo "  make test-bench       - Ejecutar benchmarks"
+	@echo ""
+	@echo "🔧 Utilidades:"
+	@echo "  make test-setup       - Configurar entorno de testing"
+	@echo "  make test-clean       - Limpiar cache y archivos"
+	@echo "  make test-validate    - Validar estructura de tests"
+	@echo "  make test-stats       - Mostrar estadísticas"
+	@echo "  make test-compare     - Comparar tests originales vs nuevos"
+	@echo ""
+	@echo "🎯 Ejecución específica:"  
+	@echo "  make test-pattern PATTERN=TestName - Tests específicos"
+	@echo "  make test-timeout TIMEOUT=60s     - Tests con timeout"
+	@echo "  make test-json                     - Output JSON para CI/CD"
+
+# Comando por defecto
+all: test-all
