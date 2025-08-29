@@ -1,0 +1,127 @@
+[
+  {
+    "id": "PHONE001",
+    "name": "Samsung Galaxy S24",
+    "image_url": "https://example.com/galaxy-s24.jpg",
+    "description": "Smartphone Samsung con cámara avanzada de 50MP y pantalla Dynamic AMOLED",
+    "price": 899.99,
+    "rating": 4.6,
+    "category": "Smartphones",
+    "brand": "Samsung",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "6.1", "unit": "pulgadas"},
+      {"name": "RAM", "value": "8", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "128", "unit": "GB"},
+      {"name": "Cámara Principal", "value": "50", "unit": "MP"},
+      {"name": "Batería", "value": "4000", "unit": "mAh"}
+    ]
+  },
+  {
+    "id": "PHONE002", 
+    "name": "iPhone 15 Pro",
+    "image_url": "https://example.com/iphone-15-pro.jpg",
+    "description": "iPhone Pro con chip A17 Pro y sistema de cámaras Pro",
+    "price": 1199.99,
+    "rating": 4.8,
+    "category": "Smartphones", 
+    "brand": "Apple",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "6.1", "unit": "pulgadas"},
+      {"name": "RAM", "value": "8", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "128", "unit": "GB"},
+      {"name": "Cámara Principal", "value": "48", "unit": "MP"},
+      {"name": "Batería", "value": "3274", "unit": "mAh"}
+    ]
+  },
+  {
+    "id": "PHONE003",
+    "name": "Google Pixel 8",
+    "image_url": "https://example.com/pixel-8.jpg", 
+    "description": "Google Pixel con procesador Tensor G3 y cámara con IA",
+    "price": 699.99,
+    "rating": 4.4,
+    "category": "Smartphones",
+    "brand": "Google", 
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "6.2", "unit": "pulgadas"},
+      {"name": "RAM", "value": "8", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "128", "unit": "GB"},
+      {"name": "Cámara Principal", "value": "50", "unit": "MP"},
+      {"name": "Batería", "value": "4575", "unit": "mAh"}
+    ]
+  },
+  {
+    "id": "LAPTOP001",
+    "name": "MacBook Pro 14",
+    "image_url": "https://example.com/macbook-pro-14.jpg",
+    "description": "MacBook Pro con chip M3 Pro y pantalla Liquid Retina XDR",
+    "price": 2199.99,
+    "rating": 4.9,
+    "category": "Laptops",
+    "brand": "Apple",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "14.2", "unit": "pulgadas"},
+      {"name": "RAM", "value": "16", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "512", "unit": "GB"},
+      {"name": "Procesador", "value": "Apple M3 Pro", "unit": ""},
+      {"name": "Batería", "value": "70", "unit": "Wh"}
+    ]
+  },
+  {
+    "id": "LAPTOP002",
+    "name": "Dell XPS 13",
+    "image_url": "https://example.com/dell-xps-13.jpg",
+    "description": "Ultrabook Dell con procesador Intel Core i7 y pantalla InfinityEdge",
+    "price": 1499.99,
+    "rating": 4.5,
+    "category": "Laptops", 
+    "brand": "Dell",
+    "available": true,
+    "specifications": [
+      {"name": "Pantalla", "value": "13.4", "unit": "pulgadas"},
+      {"name": "RAM", "value": "16", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "512", "unit": "GB"},
+      {"name": "Procesador", "value": "Intel Core i7-1360P", "unit": ""},
+      {"name": "Batería", "value": "51", "unit": "Wh"}
+    ]
+  },
+  {
+    "id": "HEADPHONES001",
+    "name": "Sony WH-1000XM5",
+    "image_url": "https://example.com/sony-wh1000xm5.jpg",
+    "description": "Audífonos inalámbricos con cancelación de ruido y sonido Hi-Res",
+    "price": 399.99,
+    "rating": 4.7,
+    "category": "Audífonos",
+    "brand": "Sony",
+    "available": true,
+    "specifications": [
+      {"name": "Conectividad", "value": "Bluetooth 5.2", "unit": ""},
+      {"name": "Cancelación de Ruido", "value": "Activa", "unit": ""},
+      {"name": "Autonomía", "value": "30", "unit": "horas"},
+      {"name": "Peso", "value": "250", "unit": "g"}
+    ]
+  },
+  {
+    "id": "TABLET001", 
+    "name": "iPad Pro 12.9",
+    "image_url": "https://example.com/ipad-pro-129.jpg",
+    "description": "iPad Pro con chip M2 y pantalla Liquid Retina XDR",
+    "price": 1099.99,
+    "rating": 4.8,
+    "category": "Tablets",
+    "brand": "Apple",
+    "available": false,
+    "specifications": [
+      {"name": "Pantalla", "value": "12.9", "unit": "pulgadas"},
+      {"name": "RAM", "value": "8", "unit": "GB"},
+      {"name": "Almacenamiento", "value": "128", "unit": "GB"},
+      {"name": "Procesador", "value": "Apple M2", "unit": ""},
+      {"name": "Batería", "value": "28.65", "unit": "Wh"}
+    ]
+  }
+]
